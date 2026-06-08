@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Quicksand", system-ui, sans-serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+  --color-rose-glow: #ff6b9d;
+  --color-gold-warm: #ffd166;
+  --color-lavender: #c77dff;
+  --color-cream: #fff5f0;
+  --color-deep-purple: #2d1b4e;
+  --color-soft-pink: #ffb4c2;
+  --color-map-sky: #87c4f8;
+  --color-map-grass: #7ec850;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: linear-gradient(180deg, #1a0f2e 0%, #2d1b4e 40%, #4a2c6a 100%);
+  color: #fff5f0;
+  touch-action: manipulation;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.game-gradient-bg {
+  background: radial-gradient(ellipse at top, rgba(255, 107, 157, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(199, 125, 255, 0.12) 0%, transparent 50%),
+    linear-gradient(180deg, #1a0f2e 0%, #2d1b4e 50%, #3d2463 100%);
+}
+
+.cozy-card {
+  background: linear-gradient(145deg, rgba(255, 245, 240, 0.12) 0%, rgba(255, 182, 193, 0.08) 100%);
+  border: 1px solid rgba(255, 182, 193, 0.25);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(255, 209, 102, 0.8);
+  }
+}
+
+.map-scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.map-scroll::-webkit-scrollbar {
+  display: none;
+}

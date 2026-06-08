@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "title": "Put do poklona",
+    "playerName": "Princeza",
+    "finalMessage": "Ti si moj najljepši poklon, moja Princezo. Svaki dan s tobom je nova avantura koju biram iznova. Volim te beskrajno. — Tvoj Medo 🐻💕",
+    "finalRewardTitle": "Naše zauvijek",
+    "finalRewardDescription": "Cijeli život novih poglavlja, ruku pod ruku."
+  },
+  "opening": {
+    "lines": [
+      "Dobrodošla, Princezo.",
+      "Negdje je skriven poklon samo za tebe.",
+      "Samo ona koja zaista zna našu priču može ga pronaći."
+    ],
+    "startButton": "Kreni u avanturu ✨"
+  },
+  "treasure": {
+    "title": "Čestitam!",
+    "lines": [
+      "Pronašla si poklon.",
+      "Ali pravo blago su svi trenuci koje smo stvorili zajedno."
+    ],
+    "customMessageLabel": "Pismo za tebe"
+  },
+  "locations": [
+    {
+      "id": 1,
+      "slug": "first-meeting",
+      "title": "Prvi susret",
+      "mapLabel": "Prvi susret",
+      "story": "Ovdje je naša priča počela — trenutak koji je promijenio sve, iako to tad nismo znali.",
+      "hint": "Sjeti se mjesta gdje nas je sudbina prvi put spojila.",
+      "challengeType": "question",
+      "question": "Gdje smo se prvi put upoznali?",
+      "answers": ["U Megamallu", "U Konzumu", "U Bingu", "U Intermezzu"],
+      "correctAnswer": 0,
+      "keyName": "Ključ početaka"
+    },
+    {
+      "id": 2,
+      "slug": "first-date",
+      "title": "Prvi dejt",
+      "mapLabel": "Prvi dejt",
+      "story": "Nervozni osmijesi, ukradene poglede i osjećaj da ovo može biti nešto čarobno.",
+      "hint": "Sjeti se našeg prvog pravog dejta.",
+      "challengeType": "question",
+      "question": "Kako je prošao naš prvi dejt?",
+      "answers": ["Odmah smo se kliknuli", "Gledali film u kinu", "Jeli u Intermezzu", "Šetali kroz Terasu"],
+      "correctAnswer": 0,
+      "keyName": "Ključ prvih iskri",
+      "photosFolder": "first-date"
+    },
+    {
+      "id": 3,
+      "slug": "funny-memories",
+      "title": "Smiješna sjećanja",
+      "mapLabel": "Smiješna sjećanja",
+      "story": "Trenuci kad smo se smijali dok nas nisu boljela obraza — to je ljepilo naše ljubavi.",
+      "hint": "Izaberi uspomenu koja nas i danas nasmije.",
+      "challengeType": "multiple-choice",
+      "question": "Koja smiješna stvar se stvarno desila?",
+      "options": [
+        { "text": "Rekla si mi: \"Ništa me ne pitaj\" — a ja sam ipak pitao", "correct": true },
+        { "text": "Zalutali smo putem do večere i završili u Bingo akvarijumu", "correct": false },
+        { "text": "Pokušali smo peći tortu i aktivirali alarm za dim", "correct": false }
+      ],
+      "keyName": "Ključ smijeha"
+    },
+    {
+      "id": 4,
+      "slug": "guardian",
+      "title": "Čuvar uspomena",
+      "mapLabel": "Koliko me znaš",
+      "story": "Mistični čuvar provjerava da li zaista poznaješ srce koje si odabrala voljeti.",
+      "hint": "Odgovaraj srcem — ti me poznaješ bolje od bilo koga.",
+      "challengeType": "boss",
+      "bossName": "Čuvar uspomena",
+      "bossHp": 100,
+      "damagePerHit": 25,
+      "questions": [
+        {
+          "question": "Kako volim da me zoveš?",
+          "answers": ["Medo", "Miško", "Snješko", "Zeko"],
+          "correctAnswer": 0
+        },
+        {
+          "question": "Koji emotikon mi najviše odgovara?",
+          "answers": ["🐻", "🦁", "🐧", "🦊"],
+          "correctAnswer": 0
+        },
+        {
+          "question": "Gdje smo bili kad sam ti prvi put donio ružu?",
+          "answers": ["U garaži", "Na Megamallu", "U Intermezzu", "Kod Bingu"],
+          "correctAnswer": 0
+        },
+        {
+          "question": "Šta mi je najdraže kod tebe?",
+          "answers": ["Tvoj osmijeh", "Tvoja kuhinja", "Tvoj ples", "Tvoja šala"],
+          "correctAnswer": 0
+        }
+      ],
+      "keyName": "Ključ poznavanja"
+    },
+    {
+      "id": 5,
+      "slug": "memory-puzzle",
+      "title": "Slagalica uspomena",
+      "mapLabel": "Slagalica",
+      "story": "Rasute djeliće naše prošlosti čeka da ih sastaviš u pravi redoslijed.",
+      "hint": "Poredaj fotografije hronološki — od najranije do najnovije.",
+      "challengeType": "puzzle",
+      "photosFolder": "memory-puzzle",
+      "photoOrder": ["02.jpg", "01.jpg", "03.jpg", "04.jpg"],
+      "keyName": "Ključ vremena"
+    },
+    {
+      "id": 6,
+      "slug": "secret-vault",
+      "title": "Tajni trezor",
+      "mapLabel": "Tajni kod",
+      "story": "Drevni trezor čuva tajne iza koda koji samo mi dvoje znamo.",
+      "hint": "Naš poseban datum — dan kad je sve postalo drugačije.",
+      "challengeType": "code",
+      "secretCode": "0405",
+      "codeHint": "Unesi naš godišnji datum (DDMM)",
+      "keyName": "Ključ tajni"
+    },
+    {
+      "id": 7,
+      "slug": "favorite-moments",
+      "title": "Omiljeni trenuci",
+      "mapLabel": "Omiljeni trenuci",
+      "story": "Svaka fotografija krije otkucaj srca. Sakupi lebdeća srca skrivena među našim najljepšim uspomenama.",
+      "hint": "Dodirni svako svjetlucavo srce da ih sakupiš sve.",
+      "challengeType": "hearts",
+      "photosFolder": "favorite-moments",
+      "photoOrder": ["01.jpg", "02.jpg", "03.jpg", "04.jpg"],
+      "messages": [
+        "Taj dan u Megamallu kad sam znao da si ti ta.",
+        "Kad si mi rekla \"Ništa me ne pitaj\" — a ja sam ipak pitao. 😄",
+        "Ruža u garaži. Najljepši trenutak ikad.",
+        "Svaki tvoj osmijeh mi je kao da smo se ponovo kliknuli.",
+        "Hvala ti što si moja Princeza, a ja tvoj Medo."
+      ],
+      "heartsToCollect": 5,
+      "keyName": "Ključ trenutaka"
+    },
+    {
+      "id": 8,
+      "slug": "future-dreams",
+      "title": "Snovi za budućnost",
+      "mapLabel": "Budućnost",
+      "story": "Horizont ispred nas je iscrtan snovima koje dijelimo i obećanjima koja tek treba ispuniti.",
+      "hint": "Reci mi o budućnosti koju gradimo zajedno.",
+      "challengeType": "future",
+      "questions": [
+        {
+          "question": "Gdje prvo želimo putovati zajedno?",
+          "answers": ["Turska", "Japan", "Italija", "Grčka"],
+          "correctAnswer": 0
+        },
+        {
+          "question": "Kakav dom želimo?",
+          "answers": ["Topao i pun ljubavi", "Moderan i minimalistički", "Pun biljaka i svjetla", "Uvijek pun prijatelja"],
+          "correctAnswer": 0
+        },
+        {
+          "question": "Koju tradiciju želimo započeti?",
+          "answers": ["Godišnji odlazak na more", "Nedjeljni doručak u krevetu", "Mjesečno gledanje zvijezda", "Pisanje ljubavnih pisama"],
+          "correctAnswer": 0
+        }
+      ],
+      "keyName": "Ključ sutrašnjice"
+    },
+    {
+      "id": 9,
+      "slug": "heart-castle",
+      "title": "Dvorski zamak",
+      "mapLabel": "Zamak srca",
+      "story": "Zamak utkan od snova i predanosti. Skrivena srca svjetlucaju unutar njegovih zidina.",
+      "hint": "Pronađi sva skrivena srca rasuta po zamku.",
+      "challengeType": "hidden-hearts",
+      "heartsToFind": 6,
+      "keyName": "Posljednji ključ ljubavi"
+    },
+    {
+      "id": 10,
+      "slug": "treasure-chamber",
+      "title": "Komora blaga",
+      "mapLabel": "Poklon",
+      "story": "Konačno, kraj putovanja. Najveće blago čeka iza zlatnih vrata.",
+      "hint": "Zaslužila si ovaj trenutak.",
+      "challengeType": "treasure",
+      "keyName": "Blago srca"
+    }
+  ],
+  "achievements": [
+    { "id": "first-key", "title": "Prvi ključ!", "description": "Avantura počinje." },
+    { "id": "halfway", "title": "Na pola puta!", "description": "Pet lokacija osvojeno." },
+    { "id": "boss-slayer", "title": "Čuvar poražen!", "description": "Tvoja ljubav nema granica." },
+    { "id": "heart-collector", "title": "Skupljačica srca!", "description": "Svaki trenutak je blago." },
+    { "id": "treasure-found", "title": "Poklon pronađen!", "description": "Najljepša ljubavna priča." }
+  ],
+  "audio": {
+    "backgroundMusic": "/audio/background.mp3",
+    "unlock": "/audio/unlock.mp3",
+    "keyCollected": "/audio/key-collected.mp3",
+    "correct": "/audio/correct.mp3",
+    "treasure": "/audio/treasure.mp3",
+    "wrong": "/audio/wrong.mp3"
+  },
+  "mapPositions": [
+    { "id": 1, "x": 18, "y": 78 },
+    { "id": 2, "x": 28, "y": 62 },
+    { "id": 3, "x": 38, "y": 48 },
+    { "id": 4, "x": 50, "y": 55 },
+    { "id": 5, "x": 62, "y": 42 },
+    { "id": 6, "x": 72, "y": 52 },
+    { "id": 7, "x": 82, "y": 38 },
+    { "id": 8, "x": 55, "y": 28 },
+    { "id": 9, "x": 35, "y": 22 },
+    { "id": 10, "x": 50, "y": 12 }
+  ]
+}
