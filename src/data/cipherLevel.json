@@ -1,0 +1,49 @@
+{
+  "locationId": 9,
+  "completionMessage": "Otključala si posljednju istinu.",
+  "wrongAttemptMessage": "Pokušaj ponovo ❤️",
+  "stages": [
+    {
+      "id": "stage-easy",
+      "difficulty": "easy",
+      "cipherType": "caesar",
+      "shift": 2,
+      "encryptedText": "ZPLjJN UF",
+      "solution": "VOLIM TE",
+      "hints": [
+        "Pomjeri svako slovo 1 koraka unazad u abecedi.",
+        "Prvo slovo ostaje V…"
+      ]
+    },
+    {
+      "id": "stage-medium",
+      "difficulty": "medium",
+      "cipherType": "caesar",
+      "shift": 4,
+      "encryptedText": "it is im ves",
+      "solution": "TI SI MI SVE",
+      "hints": [
+        "Poredaj slova po pravom redoslijedu."
+      ]
+    },
+    {
+      "id": "stage-hard",
+      "difficulty": "hard",
+      "cipherType": "mixed",
+      "shift": 3,
+      "rules": [
+        { "type": "caesar", "shift": 3 },
+        { "type": "reverse-words" }
+      ],
+      "encryptedText": "VD WRERP CHOLP RVWDULWL",
+      "solution": "SA TOBOM ZELIM OSTARITI",
+      "successMessage": "❤️ Tačno! Poruka glasi: \"SA TOBOM ZELIM OSTARITI\"",
+      "hints": [
+        "1. riječi. suprotno od - BEZ",
+        "2. riječi. suprotno od - MNOM",
+        "3. riječi. suprotno od - ODBIJAM (preformuliš)",
+        "4. riječi. _ S T _ _ _ T I"
+      ]
+    }
+  ]
+}

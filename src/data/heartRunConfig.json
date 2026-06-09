@@ -1,0 +1,32 @@
+{
+  "locationId": 7,
+  "timerDurationSeconds": 45,
+  "laneCount": 3,
+  "playerStartLane": 1,
+  "lives": 99,
+  "failOnZeroLives": false,
+  "invincibilityMs": 2000,
+  "baseScrollSpeed": 200,
+  "speedIncreasePerSecond": 1.5,
+  "maxScrollSpeed": 240,
+  "obstacleSpawnIntervalMs": 3200,
+  "obstacleSpawnIntervalMinMs": 2800,
+  "collectibleSpawnIntervalMs": 1800,
+  "hitShakeDurationMs": 250,
+  "victoryMessage": "Preživjela si sve. ❤️",
+  "failureMessage": "Nastavi — poklon te čeka!",
+  "startPrompt": "Pomjeri srce lijevo/desno i uživaj u putovanju.",
+  "background": "linear-gradient(180deg, #2d1b4e 0%, #4a2c6a 50%, #6b3d7a 100%)",
+  "particleOpacity": 0.25,
+  "obstacles": [
+    { "id": "doubt", "emoji": "☁️", "label": "sumnja", "weight": 2 },
+    { "id": "argument", "emoji": "💔", "label": "svađa", "weight": 1 },
+    { "id": "distance", "emoji": "⛈️", "label": "udaljenost", "weight": 1 },
+    { "id": "fear", "emoji": "🌑", "label": "strah", "weight": 1 }
+  ],
+  "collectibles": [
+    { "id": "heart", "emoji": "❤️", "label": "srce", "points": 10, "weight": 5 },
+    { "id": "memory", "emoji": "⭐", "label": "uspomena", "points": 25, "weight": 3 },
+    { "id": "light", "emoji": "✨", "label": "svjetlost", "points": 15, "weight": 4, "heal": true }
+  ]
+}

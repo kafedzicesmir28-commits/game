@@ -57,13 +57,6 @@ export function TreasureScreen({ onReturn, onReset }: TreasureScreenProps) {
           <p className="italic">{content.meta.finalMessage}</p>
         </StoryCard>
 
-        <div className="cozy-card rounded-3xl p-5 border-gold-warm/30">
-          <p className="font-display font-bold text-gold-warm text-lg">
-            {content.meta.finalRewardTitle}
-          </p>
-          <p className="text-cream/80 text-sm mt-2">{content.meta.finalRewardDescription}</p>
-        </div>
-
         <div className="flex flex-col gap-3 pt-4">
           <GameButton onClick={onReturn}>Nazad na mapu 🗺️</GameButton>
           <GameButton variant="ghost" size="sm" onClick={onReset}>

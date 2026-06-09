@@ -10,9 +10,16 @@ import { FutureQuestions } from "@/components/challenges/FutureQuestions";
 import { HeartCollection } from "@/components/challenges/HeartCollection";
 import { HiddenHearts } from "@/components/challenges/HiddenHearts";
 import { MemoryPuzzle } from "@/components/challenges/MemoryPuzzle";
+import { MemoryDetective } from "@/components/challenges/MemoryDetective";
+import { ConversationReconstruct } from "@/components/challenges/ConversationReconstruct";
+import { ImageJigsawPuzzle } from "@/components/challenges/ImageJigsawPuzzle";
+import { CipherDecrypt } from "@/components/challenges/CipherDecrypt";
+import { HeartRun } from "@/components/challenges/HeartRun";
+import { getHeartRunConfig } from "@/types/heartRun";
 import { GameButton } from "@/components/ui/GameButton";
 import { KeyReward } from "@/components/ui/KeyReward";
 import { StoryCard } from "@/components/ui/StoryCard";
+import { getCipherLevel } from "@/types/cipher";
 import {
   getLocation,
   getPhotosFromFolder,
@@ -149,6 +156,80 @@ function ChallengeContent({
   playSfx,
 }: ChallengeContentProps) {
   switch (location.challengeType) {
+    case "memory-detective": {
+      const folder = location.photosFolder!;
+      const photo = location.detectivePhoto ?? "01.jpg";
+      return (
+        <MemoryDetective
+          imageSrc={photoUrl(folder, photo)}
+          hotspots={location.detectiveHotspots ?? []}
+          wrongClickMessage={location.wrongClickMessage ?? "Nema ništa ovdje… pokušaj ponovo ❤️"}
+          onComplete={() => {
+            onCorrect();
+            onComplete();
+          }}
+        />
+      );
+    }
+
+    case "conversation-reconstruct":
+      return (
+        <ConversationReconstruct
+          messages={location.conversationMessages ?? []}
+          hintText={location.conversationHint ?? location.hint}
+          onComplete={() => {
+            onCorrect();
+            onComplete();
+          }}
+        />
+      );
+
+    case "image-jigsaw": {
+      const folder = location.photosFolder!;
+      const photo = location.jigsawPhoto ?? "01.jpg";
+      return (
+        <ImageJigsawPuzzle
+          imageSrc={photoUrl(folder, photo)}
+          grid={location.jigsawGrid ?? 5}
+          romanticMessage={location.jigsawMessage ?? "Volim te 💕"}
+          onSnap={onCorrect}
+          onComplete={() => {
+            onCorrect();
+            onComplete();
+          }}
+        />
+      );
+    }
+
+    case "heart-run": {
+      const runConfig = getHeartRunConfig(location.id);
+      if (!runConfig) return <p className="text-cream/60 text-sm">Konfiguracija igre nije pronađena.</p>;
+      return (
+        <HeartRun
+          config={runConfig}
+          onHit={onWrong}
+          onCollect={onCorrect}
+          onComplete={() => {
+            onCorrect();
+            onComplete();
+          }}
+        />
+      );
+    }
+
+    case "cipher-decrypt": {
+      const cipherLevel = getCipherLevel(location.id);
+      if (!cipherLevel) return <p className="text-cream/60 text-sm">Konfiguracija šifre nije pronađena.</p>;
+      return (
+        <CipherDecrypt
+          config={cipherLevel}
+          onComplete={onComplete}
+          onCorrect={onCorrect}
+          onWrong={onWrong}
+        />
+      );
+    }
+
     case "question":
       return (
         <QuestionChallenge

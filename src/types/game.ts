@@ -9,7 +9,12 @@ export type ChallengeType =
   | "hearts"
   | "future"
   | "hidden-hearts"
-  | "treasure";
+  | "treasure"
+  | "memory-detective"
+  | "conversation-reconstruct"
+  | "image-jigsaw"
+  | "cipher-decrypt"
+  | "heart-run";
 
 export interface MultipleChoiceOption {
   text: string;
@@ -26,6 +31,21 @@ export interface FutureQuestion {
   question: string;
   answers: string[];
   correctAnswer: number;
+}
+
+export interface DetectiveHotspot {
+  id: string;
+  x: number;
+  y: number;
+  radius: number;
+  icon: string;
+  label: string;
+}
+
+export interface ConversationMessage {
+  id: string;
+  text: string;
+  order: number;
 }
 
 export interface LocationConfig {
@@ -52,6 +72,17 @@ export interface LocationConfig {
   heartsToCollect?: number;
   heartsToFind?: number;
   keyName: string;
+  /** Memory Detective (level 1) */
+  detectivePhoto?: string;
+  detectiveHotspots?: DetectiveHotspot[];
+  wrongClickMessage?: string;
+  /** Conversation Reconstruct (level 3) */
+  conversationMessages?: ConversationMessage[];
+  conversationHint?: string;
+  /** Image Jigsaw (level 8) */
+  jigsawPhoto?: string;
+  jigsawGrid?: number;
+  jigsawMessage?: string;
 }
 
 export interface MapPosition {
@@ -71,8 +102,6 @@ export interface GameContent {
     title: string;
     playerName: string;
     finalMessage: string;
-    finalRewardTitle: string;
-    finalRewardDescription: string;
   };
   opening: {
     lines: string[];

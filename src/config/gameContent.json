@@ -2,15 +2,12 @@
   "meta": {
     "title": "Put do poklona",
     "playerName": "Princeza",
-    "finalMessage": "Ti si moj najljepši poklon, moja Princezo. Svaki dan s tobom je nova avantura koju biram iznova. Volim te beskrajno. — Tvoj Medo 🐻💕",
-    "finalRewardTitle": "Naše zauvijek",
-    "finalRewardDescription": "Cijeli život novih poglavlja, ruku pod ruku."
+    "finalMessage": "Ti si moj najljepši poklon, moja Princezo. Svaki dan s tobom je nova avantura koju biram iznova. Volim te beskrajno. — Tvoj Medo 🐻💕"
   },
   "opening": {
     "lines": [
       "Dobrodošla, Princezo.",
-      "Negdje je skriven poklon samo za tebe.",
-      "Samo ona koja zaista zna našu priču može ga pronaći."
+      "Negdje je skriven poklon samo za tebe."
     ],
     "startButton": "Kreni u avanturu ✨"
   },
@@ -25,15 +22,22 @@
   "locations": [
     {
       "id": 1,
-      "slug": "first-meeting",
-      "title": "Prvi susret",
-      "mapLabel": "Prvi susret",
-      "story": "Ovdje je naša priča počela — trenutak koji je promijenio sve, iako to tad nismo znali.",
-      "hint": "Sjeti se mjesta gdje nas je sudbina prvi put spojila.",
-      "challengeType": "question",
-      "question": "Gdje smo se prvi put upoznali?",
-      "answers": ["U Megamallu", "U Konzumu", "U Bingu", "U Intermezzu"],
-      "correctAnswer": 0,
+      "slug": "memory-detective",
+      "title": "Detektiv uspomena",
+      "mapLabel": "Detektiv",
+      "story": "Pronađi skrivene tragove unutar jedne uspomene — svaki detalj krije dio naše priče.",
+      "hint": "Pažljivo pregledaj fotografiju i traži simbole skrivene u pozadini.",
+      "challengeType": "memory-detective",
+      "photosFolder": "memory-puzzle",
+      "detectivePhoto": "04.jpg",
+      "wrongClickMessage": "Nema ništa ovdje… pokušaj ponovo ❤️",
+      "detectiveHotspots": [
+        { "id": "heart", "x": 72, "y": 42, "radius": 9, "icon": "❤️", "label": "Srce" },
+        { "id": "date", "x": 16, "y": 18, "radius": 8, "icon": "📅", "label": "4.5." },
+        { "id": "initials", "x": 38, "y": 32, "radius": 8, "icon": "✍️", "label": "L+E" },
+        { "id": "gift", "x": 68, "y": 48, "radius": 7, "icon": "🎁", "label": "Ruža" },
+        { "id": "star", "x": 52, "y": 58, "radius": 8, "icon": "⭐", "label": "Zvijezda" }
+      ],
       "keyName": "Ključ početaka"
     },
     {
@@ -41,28 +45,31 @@
       "slug": "first-date",
       "title": "Prvi dejt",
       "mapLabel": "Prvi dejt",
-      "story": "Nervozni osmijesi, ukradene poglede i osjećaj da ovo može biti nešto čarobno.",
+      "story": "Nervozni osmijesi, ukradeni pogledi i osjećaj da ovo može biti nešto čarobno.",
       "hint": "Sjeti se našeg prvog pravog dejta.",
       "challengeType": "question",
       "question": "Kako je prošao naš prvi dejt?",
-      "answers": ["Odmah smo se kliknuli", "Gledali film u kinu", "Jeli u Intermezzu", "Šetali kroz Terasu"],
-      "correctAnswer": 0,
+      "answers": ["Gledali film u kinu", "Jeli u Intermezzu","Odmah smo kliknuli", "Šetali kroz Tešanj"],
+      "correctAnswer": 2,
       "keyName": "Ključ prvih iskri",
       "photosFolder": "first-date"
     },
     {
       "id": 3,
-      "slug": "funny-memories",
-      "title": "Smiješna sjećanja",
-      "mapLabel": "Smiješna sjećanja",
-      "story": "Trenuci kad smo se smijali dok nas nisu boljela obraza — to je ljepilo naše ljubavi.",
-      "hint": "Izaberi uspomenu koja nas i danas nasmije.",
-      "challengeType": "multiple-choice",
-      "question": "Koja smiješna stvar se stvarno desila?",
-      "options": [
-        { "text": "Rekla si mi: \"Ništa me ne pitaj\" — a ja sam ipak pitao", "correct": true },
-        { "text": "Zalutali smo putem do večere i završili u Bingo akvarijumu", "correct": false },
-        { "text": "Pokušali smo peći tortu i aktivirali alarm za dim", "correct": false }
+      "slug": "conversation-rebuild",
+      "title": "Obnovi razgovor",
+      "mapLabel": "Razgovor",
+      "story": "Jedan važan trenutak sačuvan u porukama.",
+      "hint": "U teškim trenucima",
+      "challengeType": "conversation-reconstruct",
+      "conversationHint": "U teškim trenucima",
+      "conversationMessages": [
+        { "id": "m1", "text": "Je", "order": 3 },
+        { "id": "m2", "text": "Mi", "order": 1 },
+        { "id": "m3", "text": "Kad", "order": 4 },
+        { "id": "m4", "text": "Tu ❤️", "order": 6 },
+        { "id": "m5", "text": "Si", "order": 5 },
+        { "id": "m6", "text": "Lakše", "order": 0 }
       ],
       "keyName": "Ključ smijeha"
     },
@@ -85,18 +92,18 @@
         },
         {
           "question": "Koji emotikon mi najviše odgovara?",
-          "answers": ["🐻", "🦁", "🐧", "🦊"],
-          "correctAnswer": 0
+          "answers": ["🦁", "🐧", "🦊","🐻"],
+          "correctAnswer": 3
         },
         {
           "question": "Gdje smo bili kad sam ti prvi put donio ružu?",
-          "answers": ["U garaži", "Na Megamallu", "U Intermezzu", "Kod Bingu"],
-          "correctAnswer": 0
+          "answers": ["U garaži", "Na parkingu", "U Intermezzu", "Kod Binga"],
+          "correctAnswer": 1
         },
         {
           "question": "Šta mi je najdraže kod tebe?",
-          "answers": ["Tvoj osmijeh", "Tvoja kuhinja", "Tvoj ples", "Tvoja šala"],
-          "correctAnswer": 0
+          "answers": ["Tvoj osmijeh", "Tvoja kuhinja", "Tvoj karakter","Sve navedeno"],
+          "correctAnswer": 3
         }
       ],
       "keyName": "Ključ poznavanja"
@@ -110,7 +117,7 @@
       "hint": "Poredaj fotografije hronološki — od najranije do najnovije.",
       "challengeType": "puzzle",
       "photosFolder": "memory-puzzle",
-      "photoOrder": ["02.jpg", "01.jpg", "03.jpg", "04.jpg"],
+      "photoOrder": ["04.jpg", "03.jpg", "01.jpg", "02.jpg"],
       "keyName": "Ključ vremena"
     },
     {
@@ -122,65 +129,41 @@
       "hint": "Naš poseban datum — dan kad je sve postalo drugačije.",
       "challengeType": "code",
       "secretCode": "0405",
-      "codeHint": "Unesi naš godišnji datum (DDMM)",
+      "codeHint": "Unesi kod. HINT: (DDMM)",
       "keyName": "Ključ tajni"
     },
     {
       "id": 7,
-      "slug": "favorite-moments",
-      "title": "Omiljeni trenuci",
-      "mapLabel": "Omiljeni trenuci",
-      "story": "Svaka fotografija krije otkucaj srca. Sakupi lebdeća srca skrivena među našim najljepšim uspomenama.",
-      "hint": "Dodirni svako svjetlucavo srce da ih sakupiš sve.",
-      "challengeType": "hearts",
-      "photosFolder": "favorite-moments",
-      "photoOrder": ["01.jpg", "02.jpg", "03.jpg", "04.jpg"],
-      "messages": [
-        "Taj dan u Megamallu kad sam znao da si ti ta.",
-        "Kad si mi rekla \"Ništa me ne pitaj\" — a ja sam ipak pitao. 😄",
-        "Ruža u garaži. Najljepši trenutak ikad.",
-        "Svaki tvoj osmijeh mi je kao da smo se ponovo kliknuli.",
-        "Hvala ti što si moja Princeza, a ja tvoj Medo."
-      ],
-      "heartsToCollect": 5,
+      "slug": "heart-run",
+      "title": "Heart Run",
+      "mapLabel": "Heart Run",
+      "story": "Kratko putovanje kroz emocije — preživi 60 sekundi i pokaži da je ljubav sigurna zona.",
+      "hint": "Izbjegavaj tamne oblake i sakupljaj srca. Preživi punu minutu.",
+      "challengeType": "heart-run",
       "keyName": "Ključ trenutaka"
     },
     {
       "id": 8,
-      "slug": "future-dreams",
-      "title": "Snovi za budućnost",
-      "mapLabel": "Budućnost",
-      "story": "Horizont ispred nas je iscrtan snovima koje dijelimo i obećanjima koja tek treba ispuniti.",
-      "hint": "Reci mi o budućnosti koju gradimo zajedno.",
-      "challengeType": "future",
-      "questions": [
-        {
-          "question": "Gdje prvo želimo putovati zajedno?",
-          "answers": ["Turska", "Japan", "Italija", "Grčka"],
-          "correctAnswer": 0
-        },
-        {
-          "question": "Kakav dom želimo?",
-          "answers": ["Topao i pun ljubavi", "Moderan i minimalistički", "Pun biljaka i svjetla", "Uvijek pun prijatelja"],
-          "correctAnswer": 0
-        },
-        {
-          "question": "Koju tradiciju želimo započeti?",
-          "answers": ["Godišnji odlazak na more", "Nedjeljni doručak u krevetu", "Mjesečno gledanje zvijezda", "Pisanje ljubavnih pisama"],
-          "correctAnswer": 0
-        }
-      ],
+      "slug": "image-jigsaw",
+      "title": "Slagalica uspomene",
+      "mapLabel": "Slagalica",
+      "story": "Rekonstruiši uspomenu dio po dio — slika se skriva u komadićima.",
+      "hint": "Sastavi fotografiju na mreži 5×5.",
+      "challengeType": "image-jigsaw",
+      "photosFolder": "jigsaw",
+      "jigsawPhoto": "01.jpg",
+      "jigsawGrid": 5,
+      "jigsawMessage": "Volim te, moja Princezo. — Medo 🐻",
       "keyName": "Ključ sutrašnjice"
     },
     {
       "id": 9,
-      "slug": "heart-castle",
-      "title": "Dvorski zamak",
-      "mapLabel": "Zamak srca",
-      "story": "Zamak utkan od snova i predanosti. Skrivena srca svjetlucaju unutar njegovih zidina.",
-      "hint": "Pronađi sva skrivena srca rasuta po zamku.",
-      "challengeType": "hidden-hearts",
-      "heartsToFind": 6,
+      "slug": "cipher-decrypt",
+      "title": "Dekodiraj poruku",
+      "mapLabel": "Šifra",
+      "story": "Posljednja tajna skrivena u šifrovanoj ljubavnoj poruci — samo ti možeš je pročitati.",
+      "hint": "Koristi savjete postepeno. Velika i mala slova nisu bitna.",
+      "challengeType": "cipher-decrypt",
       "keyName": "Posljednji ključ ljubavi"
     },
     {
