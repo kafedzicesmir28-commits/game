@@ -1,10 +1,16 @@
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+
+const DRAG_THRESHOLD = 12;
 
 interface DragReorderListProps<T> {
   items: T[];
   onReorder: (items: T[]) => void;
   getKey: (item: T) => string;
-  renderItem: (item: T, index: number, state: { isDragging: boolean; isOver: boolean }) => ReactNode;
+  renderItem: (
+    item: T,
+    index: number,
+    state: { isDragging: boolean; isOver: boolean; isSelected: boolean },
+  ) => ReactNode;
   className?: string;
   itemClassName?: string;
   disabled?: boolean;
@@ -24,74 +30,154 @@ export function DragReorderList<T>({
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [offsetY, setOffsetY] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const startY = useRef(0);
+  const itemsRef = useRef(items);
+  const onReorderRef = useRef(onReorder);
+  const activePointerRef = useRef<number | null>(null);
+  const pointerIndexRef = useRef<number | null>(null);
+  const hoverIndexRef = useRef<number | null>(null);
+  const startYRef = useRef(0);
+  const startXRef = useRef(0);
+  const isDraggingRef = useRef(false);
 
-  const finishDrag = useCallback(
-    (from: number, to: number) => {
-      if (from === to) return;
-      const next = [...items];
-      const [moved] = next.splice(from, 1);
-      next.splice(to, 0, moved);
-      onReorder(next);
-    },
-    [items, onReorder],
-  );
+  itemsRef.current = items;
+  onReorderRef.current = onReorder;
 
-  const onPointerDown = (index: number, e: React.PointerEvent) => {
-    if (disabled) return;
-    e.preventDefault();
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    startY.current = e.clientY;
-    setDragIndex(index);
-    setHoverIndex(index);
-    setOffsetY(0);
-  };
+  const moveItem = useCallback((from: number, to: number) => {
+    if (from === to) return;
+    const next = [...itemsRef.current];
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
+    onReorderRef.current(next);
+  }, []);
 
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (dragIndex === null) return;
-    setOffsetY(e.clientY - startY.current);
+  const swapItems = useCallback((a: number, b: number) => {
+    if (a === b) return;
+    const next = [...itemsRef.current];
+    [next[a], next[b]] = [next[b], next[a]];
+    onReorderRef.current(next);
+  }, []);
 
-    let closest = dragIndex;
+  const findIndexAtY = useCallback((clientY: number) => {
+    let closest = 0;
     let minDist = Infinity;
     itemRefs.current.forEach((el, i) => {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const mid = rect.top + rect.height / 2;
-      const dist = Math.abs(e.clientY - mid);
+      const dist = Math.abs(clientY - mid);
       if (dist < minDist) {
         minDist = dist;
         closest = i;
       }
     });
+    return closest;
+  }, []);
+
+  const resetDragVisuals = useCallback(() => {
+    isDraggingRef.current = false;
+    pointerIndexRef.current = null;
+    hoverIndexRef.current = null;
+    activePointerRef.current = null;
+    setDragIndex(null);
+    setHoverIndex(null);
+    setOffsetY(0);
+  }, []);
+
+  const handlePointerMoveRef = useRef<(e: PointerEvent) => void>(() => {});
+  const handlePointerUpRef = useRef<(e: PointerEvent) => void>(() => {});
+  const handlePointerCancelRef = useRef<(e: PointerEvent) => void>(() => {});
+
+  const removeWindowListeners = useCallback(() => {
+    window.removeEventListener("pointermove", handlePointerMoveRef.current);
+    window.removeEventListener("pointerup", handlePointerUpRef.current);
+    window.removeEventListener("pointercancel", handlePointerCancelRef.current);
+  }, []);
+
+  handlePointerMoveRef.current = (e: PointerEvent) => {
+    if (activePointerRef.current !== e.pointerId || pointerIndexRef.current === null) return;
+
+    const dy = e.clientY - startYRef.current;
+    const dx = e.clientX - startXRef.current;
+
+    if (!isDraggingRef.current) {
+      if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+      isDraggingRef.current = true;
+      setSelectedIndex(null);
+      setDragIndex(pointerIndexRef.current);
+    }
+
+    setOffsetY(dy);
+    const closest = findIndexAtY(e.clientY);
+    hoverIndexRef.current = closest;
     setHoverIndex(closest);
   };
 
-  const onPointerUp = (e: React.PointerEvent) => {
-    if (dragIndex === null) return;
-    try {
-      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-    } catch {
-      /* already released */
+  handlePointerUpRef.current = (e: PointerEvent) => {
+    if (activePointerRef.current !== e.pointerId) return;
+
+    const index = pointerIndexRef.current;
+    if (index !== null) {
+      if (isDraggingRef.current) {
+        const to = hoverIndexRef.current ?? index;
+        moveItem(index, to);
+      } else {
+        setSelectedIndex((prev) => {
+          if (prev === null) return index;
+          if (prev === index) return null;
+          swapItems(prev, index);
+          return null;
+        });
+      }
     }
-    const to = hoverIndex ?? dragIndex;
-    finishDrag(dragIndex, to);
-    setDragIndex(null);
-    setHoverIndex(null);
-    setOffsetY(0);
+
+    resetDragVisuals();
+    removeWindowListeners();
   };
 
-  const onPointerCancel = () => {
-    setDragIndex(null);
-    setHoverIndex(null);
-    setOffsetY(0);
+  handlePointerCancelRef.current = (e: PointerEvent) => {
+    if (activePointerRef.current !== e.pointerId) return;
+    resetDragVisuals();
+    removeWindowListeners();
+  };
+
+  useEffect(() => {
+    return () => removeWindowListeners();
+  }, [removeWindowListeners]);
+
+  const onPointerDown = (index: number, e: React.PointerEvent) => {
+    if (disabled) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    activePointerRef.current = e.pointerId;
+    pointerIndexRef.current = index;
+    hoverIndexRef.current = index;
+    startYRef.current = e.clientY;
+    startXRef.current = e.clientX;
+    isDraggingRef.current = false;
+
+    window.addEventListener("pointermove", handlePointerMoveRef.current);
+    window.addEventListener("pointerup", handlePointerUpRef.current);
+    window.addEventListener("pointercancel", handlePointerCancelRef.current);
   };
 
   return (
     <div className={className}>
+      {selectedIndex !== null && !disabled && (
+        <p className="text-xs text-lavender text-center mb-2 animate-pulse">
+          Odaberi drugu stavku za zamjenu mjesta
+        </p>
+      )}
       {items.map((item, index) => {
         const isDragging = dragIndex === index;
         const isOver = hoverIndex === index && dragIndex !== null && dragIndex !== index;
+        const isSelected = selectedIndex === index;
+
         const shift =
           dragIndex !== null && !isDragging && hoverIndex !== null && dragIndex < hoverIndex
             ? index > dragIndex && index <= hoverIndex
@@ -113,10 +199,7 @@ export function DragReorderList<T>({
               itemRefs.current[index] = el;
             }}
             onPointerDown={(e) => onPointerDown(index, e)}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerCancel}
-            className={`relative select-none touch-none ${itemClassName} ${
+            className={`relative select-none touch-manipulation ${itemClassName} ${
               isDragging ? "z-50" : "z-0"
             } ${disabled ? "pointer-events-none opacity-60" : "cursor-grab active:cursor-grabbing"}`}
             style={{
@@ -128,9 +211,9 @@ export function DragReorderList<T>({
             <div
               className={`${isDragging ? "shadow-2xl scale-[1.02]" : ""} ${
                 isOver ? "ring-2 ring-gold-warm/60 rounded-2xl" : ""
-              } transition-shadow`}
+              } ${isSelected ? "ring-2 ring-lavender rounded-2xl" : ""} transition-shadow`}
             >
-              {renderItem(item, index, { isDragging, isOver })}
+              {renderItem(item, index, { isDragging, isOver, isSelected })}
             </div>
           </div>
         );

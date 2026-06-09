@@ -25,12 +25,15 @@ export function MemoryPuzzle({ photos, correctOrder, onComplete }: MemoryPuzzleP
   return (
     <div className="space-y-4">
       <p className="text-sm text-cream/70">
-        Povuci fotografije u hronološki redoslijed (najranija prva)
+        Povuci fotografije ili dodirni dvije da zamijene mjesta — najranija prva
       </p>
 
       <DragReorderList
         items={items}
-        onReorder={setItems}
+        onReorder={(next) => {
+          setItems(next);
+          setChecked(false);
+        }}
         getKey={(src) => src}
         disabled={success}
         renderItem={(src, index) => (

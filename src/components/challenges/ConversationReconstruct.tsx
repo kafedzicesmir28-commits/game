@@ -66,12 +66,15 @@ export function ConversationReconstruct({
   return (
     <div className="space-y-4">
       <p className="text-sm text-cream/70">
-        Povuci poruke u pravilan redoslijed da sastaviš rečenicu
+        Povuci poruke ili dodirni dvije da zamijene mjesta i sastavi rečenicu
       </p>
 
       <DragReorderList
         items={items}
-        onReorder={setItems}
+        onReorder={(next) => {
+          setItems(next);
+          setChecked(false);
+        }}
         getKey={(msg) => msg.id}
         disabled={success}
         renderItem={(msg, index) => (
