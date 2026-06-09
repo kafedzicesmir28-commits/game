@@ -1,6 +1,7 @@
-import { motion, Reorder, AnimatePresence } from "framer-motion";
-import { useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useMemo, useState } from "react";
 import { GameButton } from "@/components/ui/GameButton";
+import { DragReorderList } from "@/components/ui/DragReorderList";
 import type { ConversationMessage } from "@/types/game";
 import { fireTreasureConfetti } from "@/utils/confetti";
 
@@ -10,7 +11,6 @@ interface ConversationReconstructProps {
   onComplete: () => void;
 }
 
-/** Ensure every message has a unique id (duplicate ids break React keys and Reorder). */
 function normalizeMessages(msgs: ConversationMessage[]): ConversationMessage[] {
   const seen = new Set<string>();
   return msgs.map((m, i) => {
@@ -43,12 +43,10 @@ export function ConversationReconstruct({
   );
 
   const [items, setItems] = useState(() => shuffleMessages(normalized));
-  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [animating, setAnimating] = useState(false);
-  const wasDragging = useRef(false);
 
   const checkOrder = () => {
     setChecked(true);
@@ -65,76 +63,34 @@ export function ConversationReconstruct({
     }
   };
 
-  const swapItems = (fromId: string, toId: string) => {
-    const fromIdx = items.findIndex((m) => m.id === fromId);
-    const toIdx = items.findIndex((m) => m.id === toId);
-    if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
-    const next = [...items];
-    [next[fromIdx], next[toIdx]] = [next[toIdx], next[fromIdx]];
-    setItems(next);
-  };
-
-  const handleTap = (id: string) => {
-    if (success || wasDragging.current) return;
-    if (!selectedId) {
-      setSelectedId(id);
-      return;
-    }
-    if (selectedId === id) {
-      setSelectedId(null);
-      return;
-    }
-    swapItems(selectedId, id);
-    setSelectedId(null);
-  };
-
   return (
     <div className="space-y-4">
       <p className="text-sm text-cream/70">
-        Sastavi poruke u pravilan redoslijed — povuci ili dodirni dvije za zamjenu
+        Povuci poruke u pravilan redoslijed da sastaviš rečenicu
       </p>
 
-      <Reorder.Group
-        axis="y"
-        values={items}
+      <DragReorderList
+        items={items}
         onReorder={setItems}
-        className="space-y-2"
-      >
-        {items.map((msg, i) => (
-          <Reorder.Item
-            key={msg.id}
-            value={msg}
-            dragListener
-            onDragStart={() => {
-              wasDragging.current = true;
-            }}
-            onDragEnd={() => {
-              setTimeout(() => {
-                wasDragging.current = false;
-              }, 100);
-            }}
-            onClick={() => handleTap(msg.id)}
-            className={`cozy-card rounded-2xl px-4 py-3.5 min-h-[52px] cursor-grab active:cursor-grabbing touch-manipulation ${
-              selectedId === msg.id ? "ring-2 ring-gold-warm" : ""
-            } ${success && animating ? "animate-pulse" : ""}`}
-            whileDrag={{ scale: 1.02, boxShadow: "0 8px 24px rgba(0,0,0,0.3)", zIndex: 50 }}
-            initial={{ opacity: 0, x: -12 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.06 }}
+        getKey={(msg) => msg.id}
+        disabled={success}
+        renderItem={(msg, index) => (
+          <div
+            className={`cozy-card rounded-2xl px-3 py-3 min-h-[52px] flex items-center gap-2 ${
+              success && animating ? "animate-pulse" : ""
+            }`}
           >
-            <div className="flex items-start gap-2 pointer-events-none">
-              <span className="text-lg shrink-0">💬</span>
-              <p className="text-sm text-cream/90">{msg.text}</p>
-            </div>
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
-
-      {selectedId && (
-        <p className="text-xs text-gold-warm text-center">
-          Odabrano — dodirni drugu poruku za zamjenu
-        </p>
-      )}
+            <span className="text-cream/40 text-lg shrink-0" aria-hidden>
+              ⠿
+            </span>
+            <span className="text-gold-warm font-display font-bold text-xs w-4 shrink-0">
+              {index + 1}
+            </span>
+            <span className="text-lg shrink-0">💬</span>
+            <p className="text-sm text-cream/90 flex-1 pointer-events-none">{msg.text}</p>
+          </div>
+        )}
+      />
 
       {showHint && (
         <motion.p
@@ -183,7 +139,7 @@ export function ConversationReconstruct({
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={checkOrder}
-            className="w-full font-display font-semibold bg-gradient-to-r from-lavender to-purple-500 text-white rounded-2xl py-3"
+            className="w-full font-display font-semibold bg-gradient-to-r from-lavender to-purple-500 text-white rounded-2xl py-3 min-h-[48px]"
           >
             Provjeri redoslijed ✨
           </motion.button>
