@@ -114,7 +114,7 @@ export function ConversationReconstruct({
               }, 100);
             }}
             onClick={() => handleTap(msg.id)}
-            className={`cozy-card rounded-2xl px-4 py-3 cursor-grab active:cursor-grabbing touch-none ${
+            className={`cozy-card rounded-2xl px-4 py-3.5 min-h-[52px] cursor-grab active:cursor-grabbing touch-manipulation ${
               selectedId === msg.id ? "ring-2 ring-gold-warm" : ""
             } ${success && animating ? "animate-pulse" : ""}`}
             whileDrag={{ scale: 1.02, boxShadow: "0 8px 24px rgba(0,0,0,0.3)", zIndex: 50 }}

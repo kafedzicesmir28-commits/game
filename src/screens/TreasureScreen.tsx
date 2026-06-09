@@ -22,7 +22,7 @@ export function TreasureScreen({ onReturn, onReset }: TreasureScreenProps) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 game-gradient-bg flex flex-col items-center justify-center px-6 z-50 overflow-y-auto py-8"
+      className="fixed inset-0 game-gradient-bg flex flex-col items-center justify-center px-6 z-50 overflow-y-auto py-6 safe-x safe-top safe-bottom"
     >
       <FloatingHearts />
       <motion.div

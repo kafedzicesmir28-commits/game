@@ -181,8 +181,8 @@ export function ImageJigsawPuzzle({
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between text-sm">
+    <div className="space-y-3">
+      <div className="flex items-center justify-between text-xs sm:text-sm">
         <p className="text-cream/70">Sastavi sliku ({grid}×{grid})</p>
         <p className="text-gold-warm font-display font-bold">{progress}%</p>
       </div>
@@ -216,9 +216,9 @@ export function ImageJigsawPuzzle({
             </motion.div>
           </motion.div>
         ) : (
-          <motion.div key="puzzle" className="space-y-4">
+          <motion.div key="puzzle" className="space-y-3">
             <div
-              className="grid gap-[3px] p-[3px] rounded-xl bg-white/10 mx-auto w-full max-w-sm aspect-square"
+              className="grid gap-[2px] p-[2px] rounded-xl bg-white/10 mx-auto w-full max-w-[min(100%,360px)] aspect-square"
               style={{ gridTemplateColumns: `repeat(${grid}, minmax(0, 1fr))` }}
             >
               {slots.map((piece, i) => (
@@ -251,7 +251,7 @@ export function ImageJigsawPuzzle({
             </p>
 
             <div
-              className="grid gap-2 justify-items-center mx-auto w-full max-w-sm"
+              className="grid gap-1.5 justify-items-center mx-auto w-full max-w-[min(100%,360px)] max-h-[120px] overflow-y-auto overscroll-contain py-1"
               style={{ gridTemplateColumns: `repeat(${Math.min(grid, 5)}, minmax(0, 1fr))` }}
             >
               {pool.map((piece) => (
@@ -259,7 +259,7 @@ export function ImageJigsawPuzzle({
                   key={piece.id}
                   type="button"
                   onClick={() => handlePoolClick(piece.id)}
-                  className={`aspect-square w-full max-w-[56px] rounded-md overflow-hidden border-2 transition-all ${
+                  className={`aspect-square w-full max-w-[52px] touch-target rounded-md overflow-hidden border-2 transition-all ${
                     selectedPieceId === piece.id
                       ? "border-gold-warm scale-105 shadow-lg"
                       : "border-white/25 hover:border-white/40"

@@ -79,9 +79,9 @@ export function LocationScreen({
       initial={{ opacity: 0, y: "100%" }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: "100%" }}
-      className="fixed inset-0 z-40 game-gradient-bg flex flex-col"
+      className="fixed inset-0 z-40 game-gradient-bg flex flex-col safe-x"
     >
-      <header className="flex items-center justify-between px-4 pt-4 pb-2 shrink-0">
+      <header className="flex items-center justify-between pt-3 pb-2 shrink-0 safe-top">
         <GameButton variant="ghost" size="sm" onClick={onClose}>
           ← Mapa
         </GameButton>
@@ -91,8 +91,13 @@ export function LocationScreen({
         <div className="w-16" />
       </header>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-4">
-        <StoryCard title="Naša priča">{location.story}</StoryCard>
+      <div className="flex-1 overflow-y-auto pb-4 space-y-3 safe-bottom overscroll-contain">
+        {location.challengeType !== "heart-run" && (
+          <StoryCard title="Naša priča">{location.story}</StoryCard>
+        )}
+        {location.challengeType === "heart-run" && (
+          <p className="text-xs text-cream/70 text-center px-1 leading-relaxed">{location.story}</p>
+        )}
 
         <AnimatePresence>
           {feedback && (
@@ -108,8 +113,10 @@ export function LocationScreen({
         </AnimatePresence>
 
         {!challengeDone && (
-          <div className="cozy-card rounded-3xl p-5">
-            <h3 className="font-display font-bold text-lavender mb-4">✨ Izazov</h3>
+          <div className={`cozy-card rounded-3xl ${location.challengeType === "heart-run" ? "p-3" : "p-4 sm:p-5"}`}>
+            {location.challengeType !== "heart-run" && (
+              <h3 className="font-display font-bold text-lavender mb-3 text-sm sm:text-base">✨ Izazov</h3>
+            )}
             <ChallengeContent
               location={location}
               onCorrect={() => {

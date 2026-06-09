@@ -23,14 +23,14 @@ export function MemoryDetective({
 
   const total = hotspots.length;
 
-  const handleImageClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleTapAt = useCallback(
+    (clientX: number, clientY: number) => {
       if (completed) return;
       const rect = containerRef.current?.getBoundingClientRect();
       if (!rect) return;
 
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      const x = ((clientX - rect.left) / rect.width) * 100;
+      const y = ((clientY - rect.top) / rect.height) * 100;
 
       const hit = hotspots.find((h) => {
         if (found.has(h.id)) return false;
@@ -57,20 +57,24 @@ export function MemoryDetective({
   );
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between text-sm">
+    <div className="space-y-3">
+      <div className="flex items-center justify-between text-xs sm:text-sm">
         <p className="text-cream/70">Pronađi skrivene tragove u uspomeni</p>
         <p className="text-gold-warm font-display font-bold">
           {found.size}/{total}
         </p>
       </div>
 
-      <div className="relative">
+      <div className={`relative ${zoomed ? "overflow-auto max-h-[50dvh]" : ""}`}>
         <motion.div
           ref={containerRef}
-          onClick={handleImageClick}
-          className={`relative rounded-2xl overflow-hidden cursor-crosshair touch-none select-none ${
-            zoomed ? "scale-150 origin-center" : ""
+          onClick={(e) => handleTapAt(e.clientX, e.clientY)}
+          onTouchEnd={(e) => {
+            const touch = e.changedTouches[0];
+            if (touch) handleTapAt(touch.clientX, touch.clientY);
+          }}
+          className={`relative rounded-2xl overflow-hidden cursor-crosshair select-none ${
+            zoomed ? "scale-150 origin-top-left min-w-[150%]" : ""
           }`}
           animate={completed ? { boxShadow: "0 0 40px rgba(255, 209, 102, 0.8)" } : {}}
           transition={{ duration: 1.2 }}
@@ -119,7 +123,7 @@ export function MemoryDetective({
         <button
           type="button"
           onClick={() => setZoomed((z) => !z)}
-          className="absolute bottom-2 right-2 text-xs bg-black/50 text-cream px-2 py-1 rounded-lg z-10"
+          className="absolute bottom-2 right-2 touch-target text-sm bg-black/60 text-cream px-3 py-2 rounded-xl z-10"
         >
           {zoomed ? "🔍−" : "🔍+"}
         </button>

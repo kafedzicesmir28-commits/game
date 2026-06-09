@@ -14,7 +14,7 @@ export function OpeningScene({ onStart }: OpeningSceneProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, y: -20 }}
-      className="fixed inset-0 game-gradient-bg flex flex-col items-center justify-center px-6 z-40"
+      className="fixed inset-0 game-gradient-bg flex flex-col items-center justify-center px-6 z-40 safe-x safe-top safe-bottom"
     >
       <FloatingParticles />
       <FloatingHearts />

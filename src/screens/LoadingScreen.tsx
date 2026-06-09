@@ -4,7 +4,7 @@ import { content } from "@/types/game";
 export function LoadingScreen() {
   return (
     <motion.div
-      className="fixed inset-0 game-gradient-bg flex flex-col items-center justify-center z-50"
+      className="fixed inset-0 game-gradient-bg flex flex-col items-center justify-center z-50 safe-x safe-top safe-bottom"
       exit={{ opacity: 0 }}
     >
       <motion.div

@@ -52,8 +52,8 @@ export function WorldMap({
   );
 
   return (
-    <div className="fixed inset-0 flex flex-col game-gradient-bg">
-      <header className="relative z-20 px-4 pt-4 pb-2 shrink-0">
+    <div className="fixed inset-0 flex flex-col game-gradient-bg safe-x">
+      <header className="relative z-20 pt-3 pb-2 shrink-0 safe-top">
         <div className="flex items-center justify-between mb-3">
           <h1 className="font-display text-sm sm:text-base font-bold text-gold-warm truncate">
             {content.meta.title}
@@ -81,8 +81,8 @@ export function WorldMap({
         </p>
       </header>
 
-      <div className="flex-1 map-scroll relative">
-        <div className="relative min-w-[600px] min-h-[700px] w-full h-full mx-auto">
+      <div className="flex-1 map-scroll relative safe-bottom">
+        <div className="relative w-full min-h-full min-h-[min(680px,calc(100dvh-9rem))] sm:min-w-[600px] sm:min-h-[700px] mx-auto">
           <div
             className="absolute inset-0 rounded-none"
             style={{
@@ -123,7 +123,7 @@ export function WorldMap({
                   className={`relative flex flex-col items-center ${completed ? "glow-pulse" : ""}`}
                 >
                   <div
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center text-lg shadow-lg border-2 ${
+                    className={`w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center text-lg shadow-lg border-2 touch-target ${
                       completed
                         ? "bg-amber-300/90 border-amber-200 text-deep-purple"
                         : unlocked

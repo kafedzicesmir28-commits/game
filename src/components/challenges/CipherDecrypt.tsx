@@ -156,7 +156,8 @@ export function CipherDecrypt({ config, onComplete, onWrong, onCorrect }: Cipher
               onKeyDown={(e) => e.key === "Enter" && submit()}
               placeholder="Dekodiraj poruku..."
               disabled={finished}
-              className="w-full cozy-card rounded-2xl px-4 py-3 text-center text-base font-display tracking-wide bg-transparent outline-none focus:border-gold-warm/50"
+              className="w-full cozy-card rounded-2xl px-4 py-3 text-center text-base font-display tracking-wide bg-transparent outline-none focus:border-gold-warm/50 touch-target"
+              style={{ fontSize: "16px" }}
             />
           </motion.div>
         )}

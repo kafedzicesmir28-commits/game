@@ -203,12 +203,12 @@ export function HeartRun({ config, onComplete, onHit, onCollect }: HeartRunProps
   }
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between text-xs">
-        <span className="text-gold-warm font-bold font-display">
+    <div className="space-y-2">
+      <div className="flex items-center justify-between text-xs px-0.5">
+        <span className="text-gold-warm font-bold font-display text-sm">
           {Math.max(0, Math.ceil(config.timerDurationSeconds - elapsed))}s
         </span>
-        <span className="text-cream/60">{score} bodova</span>
+        <span className="text-cream/60">{score} pts</span>
       </div>
 
       <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
@@ -221,11 +221,8 @@ export function HeartRun({ config, onComplete, onHit, onCollect }: HeartRunProps
       <motion.div
         animate={shaking ? { x: [-4, 4, -3, 3, 0] } : { x: 0 }}
         transition={{ duration: 0.25 }}
-        className="relative rounded-2xl overflow-hidden touch-none select-none"
-        style={{
-          height: "min(52vh, 380px)",
-          background: config.background,
-        }}
+        className="relative rounded-2xl overflow-hidden touch-none select-none w-full h-[clamp(240px,42dvh,340px)]"
+        style={{ background: config.background }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
@@ -288,15 +285,9 @@ export function HeartRun({ config, onComplete, onHit, onCollect }: HeartRunProps
           ❤️
         </motion.div>
 
-        <div className="absolute inset-0 flex">
+        <div className="absolute inset-0 flex pointer-events-none">
           {Array.from({ length: config.laneCount }).map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              className="flex-1 h-full opacity-0"
-              onClick={() => setPlayerLane(i)}
-              aria-label={`Traka ${i + 1}`}
-            />
+            <div key={i} className="flex-1 h-full" />
           ))}
         </div>
 
@@ -320,13 +311,31 @@ export function HeartRun({ config, onComplete, onHit, onCollect }: HeartRunProps
         </AnimatePresence>
       </motion.div>
 
-      <div className="hidden sm:flex gap-2 justify-center">
-        <GameButton variant="ghost" size="sm" onClick={() => moveLane(-1)} disabled={phase !== "playing"}>
+      <div className="grid grid-cols-3 gap-2 pt-1">
+        <button
+          type="button"
+          onClick={() => moveLane(-1)}
+          disabled={phase !== "playing"}
+          className="touch-target col-span-1 cozy-card rounded-xl text-cream font-display font-semibold text-sm disabled:opacity-40 active:scale-95 transition-transform"
+        >
           ← Lijevo
-        </GameButton>
-        <GameButton variant="ghost" size="sm" onClick={() => moveLane(1)} disabled={phase !== "playing"}>
+        </button>
+        <button
+          type="button"
+          onClick={() => setPlayerLane(1)}
+          disabled={phase !== "playing"}
+          className="touch-target col-span-1 cozy-card rounded-xl text-cream/80 font-display text-xs disabled:opacity-40 active:scale-95 transition-transform"
+        >
+          Sredina
+        </button>
+        <button
+          type="button"
+          onClick={() => moveLane(1)}
+          disabled={phase !== "playing"}
+          className="touch-target col-span-1 cozy-card rounded-xl text-cream font-display font-semibold text-sm disabled:opacity-40 active:scale-95 transition-transform"
+        >
           Desno →
-        </GameButton>
+        </button>
       </div>
     </div>
   );
